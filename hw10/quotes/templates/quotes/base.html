@@ -13,18 +13,31 @@
 </head>
 <body>
 <div class="container">
-    <div class="row header-box pt-3">
+    <div class="row header-box pt-3 mb-3">
         <div class="col-md-8">
             <h1>
                 <a href="/" style="text-decoration: none">Quotes to Scrape</a>
             </h1>
         </div>
         <div class="col-md-4">
-            <p>
-                <a href="/login" class="btn btn-primary">Sign Up</a>
-                <a href="/login" class="btn btn-primary">Login</a>
-                <a href="/login" class="btn btn-primary">Logout</a>
-            </p>
+            {% if user.is_authenticated %}
+            <ul>
+                <li><a href="{% url 'quotes:author' %}" role="button">Add author</a></li>
+                <li><a href="{% url 'quotes:quote' %}" role="button">Add quote</a></li>
+                <li><a href="{% url 'quotes:tag' %}" role="button">Add tag</a></li>
+                <li><a href="{% url 'users:logout' %}" role="button">Logout</a></li>
+            </ul>
+            {% else %}
+            <ul>
+                <li><a href="{% url 'users:signup' %}" role="button">Sign Up</a></li>
+                <li><a href="{% url 'users:login' %}" role="button">Login</a></li>
+            </ul>
+            {% endif %}
+            <!--            <p>-->
+            <!--                <a href="/login" class="btn btn-primary">Sign Up</a>-->
+            <!--                <a href="/login" class="btn btn-primary">Login</a>-->
+            <!--                <a href="/login" class="btn btn-primary">Logout</a>-->
+            <!--            </p>-->
         </div>
     </div>
 

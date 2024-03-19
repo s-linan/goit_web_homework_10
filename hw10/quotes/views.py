@@ -25,7 +25,7 @@ def tag(request):
             tag = form.save(commit=False)
             tag.user = request.user
             tag.save()
-            return redirect(to='quotes:base')
+            return redirect(to='quotes:root')
         else:
             return render(request, 'quotes/tag.html', {'form': form})
 
@@ -46,7 +46,7 @@ def quote(request):
             for tag in choice_tags.iterator():
                 new_quote.tags.add(tag)
 
-            return redirect(to='quotes:base')
+            return redirect(to='quotes:root')
         else:
             return render(request, 'quotes/quote.html', {"tags": tags, 'form': form})
 
@@ -67,7 +67,7 @@ def author(request):
             for tag in choice_tags.iterator():
                 new_author.tags.add(tag)
 
-            return redirect(to='quotes:base')
+            return redirect(to='quotes:root')
         else:
             return render(request, 'quotes/author.html', {"tags": tags, 'form': form})
 
@@ -89,22 +89,22 @@ def author_detail(request, author_id):
 @login_required
 def set_done_quote(request, note_id):
     Quote.objects.filter(pk=note_id, user=request.user).update(done=True)
-    return redirect(to='quotes:base')
+    return redirect(to='quotes:root')
 
 
 @login_required
 def delete_quote(request, note_id):
     Quote.objects.get(pk=note_id, user=request.user).delete()
-    return redirect(to='quotes:base')
+    return redirect(to='quotes:root')
 
 
 @login_required
 def set_done_author(request, note_id):
     Author.objects.filter(pk=note_id, user=request.user).update(done=True)
-    return redirect(to='quotes:base')
+    return redirect(to='quotes:root')
 
 
 @login_required
 def delete_author(request, note_id):
     Author.objects.get(pk=note_id, user=request.user).delete()
-    return redirect(to='quotes:base')
+    return redirect(to='quotes:root')

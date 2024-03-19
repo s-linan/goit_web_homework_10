@@ -10,4 +10,5 @@ urlpatterns = [
     path('tag/', views.tag, name='tag'),
     path('quote/', views.quote, name='quote'),
     path('author/', views.author, name='author'),
+    path('author_detail/<int:author_id>', views.author_detail, name='author_detail'),
 ]

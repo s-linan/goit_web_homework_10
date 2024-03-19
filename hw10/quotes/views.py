@@ -19,11 +19,12 @@ def main(request, page=1):
 
 @login_required
 def tag(request):
+    user = request.user
     if request.method == 'POST':
         form = TagForm(request.POST)
         if form.is_valid():
             tag = form.save(commit=False)
-            tag.user = request.user
+            tag.user = user
             tag.save()
             return redirect(to='quotes:root')
         else:
@@ -34,15 +35,16 @@ def tag(request):
 
 @login_required
 def quote(request):
-    tags = Tag.objects.filter(user=request.user).all()
+    user = request.user
+    tags = Tag.objects.filter(user=user).all()
 
     if request.method == 'POST':
         form = QuoteForm(request.POST)
         if form.is_valid():
             new_quote = form.save(commit=False)
-            new_quote.user = request.user
+            new_quote.user = user
             new_quote.save()
-            choice_tags = Tag.objects.filter(name__in=request.POST.getlist('tags'), user=request.user)
+            choice_tags = Tag.objects.filter(name__in=request.POST.getlist('tags'), user=user)
             for tag in choice_tags.iterator():
                 new_quote.tags.add(tag)
 
@@ -55,15 +57,17 @@ def quote(request):
 
 @login_required
 def author(request):
-    tags = Tag.objects.filter(user=request.user).all()
+    user = request.user
+
+    tags = Tag.objects.filter(user=user).all()
 
     if request.method == 'POST':
         form = AuthorForm(request.POST)
         if form.is_valid():
             new_author = form.save(commit=False)
-            new_author.user = request.user
+            new_author.user = user
             new_author.save()
-            choice_tags = Tag.objects.filter(name__in=request.POST.getlist('tags'), user=request.user)
+            choice_tags = Tag.objects.filter(name__in=request.POST.getlist('tags'), user=user)
             for tag in choice_tags.iterator():
                 new_author.tags.add(tag)
 

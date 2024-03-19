@@ -13,6 +13,7 @@ class TagForm(ModelForm):
 class QuoteForm(ModelForm):
     quote = CharField(min_length=10, max_length=1000, required=True, widget=TextInput())
 
+
     class Meta:
         model = Quote
         fields = ['quote']
